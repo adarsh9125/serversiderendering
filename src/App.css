@@ -81,3 +81,7 @@ text-align: left
 .hidelink,.removenewsid{
   color: orange;
 }
+
+.body-form{
+  min-height: 827px;
+}
