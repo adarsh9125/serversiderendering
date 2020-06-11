@@ -1,5 +1,6 @@
 import axiosConfig from '../axiosconfig/axiosConfig';
 import axios from 'axios';
+import _ from 'lodash';
 
 export const selectUser = (vendor) => {
     console.log("You clicked on user: ");
@@ -47,7 +48,50 @@ export const getAllnews = (pageno) => {
     }
 };
 
+export const increaseVotecount = (pageno,id,previousvote=1)=>{
+    console.log("You clicked on getAllnews: ");
+    let apiUrl = 'http://hn.algolia.com/api/v1/search?query=foo&tags=story&page='+pageno;
+    // let apiUrl = '?query=foo&tags=story&page=2';
+    return (dispatch, getState) => {
+        // dispatch(fetchvendorRequest());
+        console.log("inside thunk midleware....");
+        return axios.get(apiUrl)
+          .then( (response)=> {
+            const newslist = response.data;
+            dispatch(incresevotecount(newslist,id,previousvote));
+          })
+          .catch(function (error) {
+            dispatch(requestError(error.message));
+          });
+    }
+} 
 
+export const incresevotecount =(response,id,previousvote)=>{
+     let originalresponse = response;
+     let newsrowdata = _.filter(response.hits, { objectID: id });
+     newsrowdata[0].points=previousvote+1;
+     let position = _.findIndex(response.hits, { objectID: id });
+     var storedVotes = localStorage.getItem("Voteupdated");
+     if(storedVotes !== null){
+        var revedIds = JSON.parse(storedVotes);
+        revedIds.push({newposition:position,"particularpositionhits":newsrowdata[0]});
+        localStorage.setItem("Voteupdated", JSON.stringify(revedIds));
+        var updatedstoredVotes = JSON.parse(localStorage.getItem("Voteupdated"));
+        console.log("updatedstoredVotes==========>",updatedstoredVotes);
+        for(var i=0;i<updatedstoredVotes.length;i++){
+            let currentnewposition = updatedstoredVotes[i].newposition;
+            originalresponse.hits[currentnewposition] = updatedstoredVotes[i].particularpositionhits;
+        }
+        
+     }else{
+        localStorage.setItem("Voteupdated", JSON.stringify([{newposition:position,"particularpositionhits":newsrowdata[0]}]));
+        originalresponse.hits[position] = newsrowdata[0];
+     }
+     
+     return (dispatch, getState) => {
+        dispatch(newslistfunc(originalresponse));
+    }
+}
 
 export const makesignuprequest = (reqparams) => {
     console.log("You clicked on getvendors: ",reqparams);

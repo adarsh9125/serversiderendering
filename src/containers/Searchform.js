@@ -7,7 +7,7 @@ import {
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import timediff from "timediff";
-import { getAllnews } from "../actions/index";
+import { getAllnews,increaseVotecount } from "../actions/index";
 import Showchart from './Showchart';
 
 /*
@@ -84,8 +84,10 @@ handleHide(e,removeobjectid){
             <td>
             {news.num_comments}
             </td>
-            <td>{news.points}</td>
-            <td><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRIV21HsHa8xsXSf67C9LJ3Z8b5F6_IXmRqoq8AoPlfzQa-phNO&usqp=CAU" height="20px" width="20px"></img></td>
+            <td><div role="region" id="planetInfo" aria-live="polite">{news.points}</div></td>
+            <td onClick={(e)=>this.props.increaseVotecount(this.state.pageno,id,news.points)}>
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRIV21HsHa8xsXSf67C9LJ3Z8b5F6_IXmRqoq8AoPlfzQa-phNO&usqp=CAU" height="20px" width="20px"></img>
+            </td>
             <td>{news.title}<span className="urllink"> ({news.url}) by  </span><span className="authername">{news.author} </span> 
             <span className="createdtimeago">{timediffstring}</span>[<span className="removenewsid"><a className="hidelink"  onClick={(e)=>this.handleHide(e,id)}>Hide</a></span>]</td>
           </tr>
@@ -141,7 +143,7 @@ function mapStateToProps(state) {
 // Get actions and pass them as props to to UserList
 //      > now UserList has this.props.selectUser
 function matchDispatchToProps(dispatch) {
-  return bindActionCreators({ getAllnews: getAllnews }, dispatch);
+  return bindActionCreators({ getAllnews: getAllnews,increaseVotecount:increaseVotecount }, dispatch);
 }
 
 export default connect(mapStateToProps,matchDispatchToProps)(Searchform);
