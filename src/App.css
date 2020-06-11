@@ -77,3 +77,7 @@ text-align: left
 .page-link{
   color: orange;
 }
+
+.hidelink,.removenewsid{
+  color: orange;
+}

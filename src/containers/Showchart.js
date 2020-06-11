@@ -15,7 +15,7 @@ class Showchart extends React.Component {
   }
   render() {
     const data = {
-        labels: ["11", "123", "124", "Ap125", "126", "Jun"],
+        labels: ["11", "123", "124", "180", "200", "250"],
         datasets: [
           {
             label: "Vote",
