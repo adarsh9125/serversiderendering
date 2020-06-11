@@ -1,0 +1,10 @@
+function fullname(){
+   callback(null,"Adarsh Tiwari");
+}
+
+function name(fullname(err,result){
+  console.log("result======>",result);
+})
+
+
+name();
