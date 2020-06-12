@@ -1,8 +1,6 @@
 import path from 'path';
 import fs from 'fs';
-
 import React from 'react';
-import { Provider } from "react-redux";
 import { compose, createStore, applyMiddleware } from "redux";
 import express from 'express';
 import {renderToString} from 'react-dom/server';
@@ -19,7 +17,6 @@ app.get('/*', (req, res) => {
   console.log("req.path=====>",req.path,"req.url=============>",req.url);
   console.log("routes=========>",routes);
   const activeRoute = routes.find((route) => matchPath(req.url, route)) || {}
-  console.log("activeRoute=========>",activeRoute);
   const promise = activeRoute.fetchInitialData
     ? activeRoute.fetchInitialData(req.path)
     : Promise.resolve()
@@ -31,9 +28,6 @@ app.get('/*', (req, res) => {
          <App />
          </StaticRouter>
       );
-
-
-  
 
   const indexFile = path.resolve('./build/index.html');
   fs.readFile(indexFile, 'utf8', (err, data) => {
