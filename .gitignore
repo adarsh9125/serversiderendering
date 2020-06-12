@@ -10,7 +10,8 @@
 
 # production
 /build
-
+/server-build
+/server-build/index.js
 # misc
 .DS_Store
 .env.local

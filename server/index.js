@@ -28,8 +28,8 @@ app.get('/*', (req, res) => {
          <App />
          </StaticRouter>
       );
-
-  const indexFile = path.resolve('./build/index.html');
+  //const indexFile = path.resolve('./build/index.html');
+  const indexFile = path.resolve('./index.html');
   fs.readFile(indexFile, 'utf8', (err, data) => {
     if (err) {
       console.error('Something went wrong:', err);
