@@ -5,9 +5,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 1) Chnage File: src/index.js
    change render to hydrate like
    code:-
-   ReactDom.render(<App />, document.getElementById('root'))
+   `ReactDom.render(<App />, document.getElementById('root'))`
    To
-   ReactDom.hydrate(<App />, document.getElementById('root'))
+   `ReactDom.hydrate(<App />, document.getElementById('root'))`
 --------------------------------------------------------------------------------------------------------------------
 2) npm install express
 3) Create server folder inside project.
